@@ -1,5 +1,5 @@
 import { Injectable, DependencyLifeTime } from '@miracledevs/paradigm-web-di';
-import { ContextCollection } from '../contexts/DependencyContext';
+import { ContextCollection } from '../../contexts/DependencyContext';
 
 @Injectable({ collection: ContextCollection, lifeTime: DependencyLifeTime.Singleton })
 export class StringService
@@ -77,6 +77,6 @@ export class StringService
         if (!values)
             throw new Error('Values can not be null or undefined.');
 
-        return values.reduce((p, c) => `${p}${separator}${c}`, '');
+        return values.reduce((p, c) => `${p}${separator}${c}`);
     }
 }

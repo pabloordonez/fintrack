@@ -1,6 +1,6 @@
 import { StringService } from './StringService';
 import { Injectable, DependencyLifeTime } from '@miracledevs/paradigm-web-di';
-import { ContextCollection } from '../contexts/DependencyContext';
+import { ContextCollection } from '../../contexts/DependencyContext';
 
 @Injectable({ collection: ContextCollection, lifeTime: DependencyLifeTime.Singleton })
 export class DateService

@@ -2,8 +2,8 @@ import { ILogProvider } from './ILogProvider';
 import { LogType } from './LogType';
 import { Injectable, DependencyLifeTime } from '@miracledevs/paradigm-web-di';
 import { ContextCollection } from '../../contexts/DependencyContext';
-import { StringService } from '../StringService';
-import { DateService } from '../DateService';
+import { StringService } from '../types/StringService';
+import { DateService } from '../types/DateService';
 
 @Injectable({ collection: ContextCollection, lifeTime: DependencyLifeTime.Singleton })
 export class LoggingService
