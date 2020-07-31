@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import { TestMessage } from '../../messages/TestMessage';
 import { useDependency } from '../../contexts/DependencyContext';
 import { MessageBusService } from '../../services/messaging/MessageBus';
-import './NumberGenerator.scss';
 import { LoggingService } from '../../services/logging/LoggingService';
+import './NumberGenerator.scss';
 
 export function NumberGenerator(): ReactElement
 {
