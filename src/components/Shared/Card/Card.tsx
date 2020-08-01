@@ -1,5 +1,5 @@
-import React, { ReactElement, PropsWithChildren } from 'react';
 import './Card.scss';
+import React, { ReactElement, PropsWithChildren } from 'react';
 
 export function Card(props: PropsWithChildren<{}>): ReactElement
 {

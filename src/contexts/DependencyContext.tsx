@@ -58,3 +58,19 @@ export function useDependency<T>(serviceType: ObjectType<T>): T
 
     return dependencyContext.container.resolve(serviceType);
 }
+
+/**
+ * Resolves a service by its type, and returns the instance.
+ * The instance life cycle is defined in the service registration.
+ * @param dependencies The dependencies.
+ */
+export function useDependencies(...dependencies: ObjectType[]): any[]
+{
+    const dependencyContext = useContext(DependencyContext);
+
+    const container = (!dependencyContext.container)
+        ? dependencyContext.container = dependencyContext.collection.buildContainer(true)
+        : dependencyContext.container;
+
+    return dependencies.map(x => container.resolve(x));
+}

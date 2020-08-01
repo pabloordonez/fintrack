@@ -1,6 +1,6 @@
+import './Rules.scss';
 import React, { ReactElement } from 'react';
 import { Page } from '../../../Shared/Page/Page';
-import './Rules.scss';
 
 export function Rules(): ReactElement
 {

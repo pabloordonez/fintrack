@@ -1,0 +1,35 @@
+@import "colors";
+
+table {
+    border-spacing: 0;
+    width: 100%;
+
+    tr {
+        td {
+            padding: 10px;
+        }
+    }
+
+    thead {
+        tr {
+            td {
+                font-weight: 600;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            transition: .25s;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba($primary-color, .2);
+            }
+
+            &:active {
+                background: rgba($primary-color, .3);
+            }
+        }
+    }
+}

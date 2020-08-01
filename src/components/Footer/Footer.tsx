@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
 import './Footer.scss';
+import React, { ReactElement } from 'react';
 
 export function Footer(): ReactElement
 {

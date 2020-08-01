@@ -1,5 +1,5 @@
-import React, { ReactElement, PropsWithChildren } from 'react';
 import './Page.scss';
+import React, { ReactElement, PropsWithChildren } from 'react';
 
 export function Page(props: PropsWithChildren<{}>): ReactElement
 {

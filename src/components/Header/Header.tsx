@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
 import './Header.scss';
+import React, { ReactElement } from 'react';
 
 export function Header(): ReactElement
 {

@@ -1,5 +1,5 @@
-import React from 'react';
 import './App.scss';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { DependencyProvider } from '../contexts/DependencyContext';
 import { Header } from './Header/Header';

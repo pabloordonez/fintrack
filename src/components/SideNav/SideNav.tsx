@@ -1,6 +1,6 @@
+import './SideNav.scss';
 import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
-import './SideNav.scss';
 
 export function SideNav(): ReactElement
 {
