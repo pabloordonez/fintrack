@@ -1,0 +1,18 @@
+@import "../../../stylesheets/colors";
+
+.card {
+    background: $secondary-background-light;
+    padding: 20px;
+    border: 1px solid darken($color: $secondary-background-dark, $amount: 10);
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+    transition: .3s;
+
+    * {
+        color: #505050;
+    }
+
+    &:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+}
