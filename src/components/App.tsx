@@ -1,16 +1,24 @@
 import React from 'react';
-import './App.css';
-import { Numbers } from './Numbers/Numbers';
+import './App.scss';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { DependencyProvider } from '../contexts/DependencyContext';
-import { NumberGenerator } from './NumberGenerator/NumberGenerator';
+import { Header } from './Header/Header';
+import { SideNav } from './SideNav/SideNav';
+import { Main } from './Main/Main';
+import { Footer } from './Footer/Footer';
 
 function App()
 {
     return (
         <DependencyProvider>
-            <Numbers />
-            <Numbers />
-            <NumberGenerator />
+            <div className='application'>
+                <Router>
+                    <Header />
+                    <SideNav />
+                    <Main />
+                    <Footer />
+                </Router>
+            </div>
         </DependencyProvider>
     );
 }

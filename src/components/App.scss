@@ -1,0 +1,43 @@
+@import "../stylesheets/colors";
+@import "../stylesheets/fonts";
+@import "../stylesheets/sizes";
+
+* {
+    padding: 0;
+    margin: 0;
+    color: $font-color;
+    font-family: $font-family;
+}
+
+.application {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: $sidenav-width auto;
+    grid-template-rows: $header-height auto $footer-height;
+    gap: 0;
+    grid-template-areas: "sidenav header" "sidenav body" "sidenav footer";
+
+    header {
+        grid-area: header;
+        background: $primary-background-light;
+    }
+
+    nav {
+        grid-area: sidenav;
+        background: $primary-background-dark;
+    }
+
+    main {
+        grid-area: body;
+        background: $secondary-background-dark;
+    }
+
+    footer {
+        grid-area: footer;
+        background: $primary-color;
+    }
+}

@@ -1,0 +1,28 @@
+.ms-Icon {
+    display: inline-block;
+    font-family: "FabricMDL2Icons";
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    speak: none;
+}
+
+.ms-Icon--Bank::before {
+    content: "";
+}
+
+.ms-Icon--Match::before {
+    content: "";
+}
+
+.ms-Icon--Import::before {
+    content: "";
+}
+
+.ms-Icon--Manual::before {
+    content: "";
+}
+
+.ms-Icon--Report::before {
+    content: "";
+}
