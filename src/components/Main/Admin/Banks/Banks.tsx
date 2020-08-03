@@ -4,56 +4,41 @@ import { Page } from '../../../Shared/Page/Page';
 import { Card } from '../../../Shared/Card/Card';
 import { useDependency } from '../../../../contexts/DependencyContext';
 import { BankRepositoryService } from '../../../../services/repositories/BankRepositoryService';
-import { LoggingService } from '../../../../services/logging/LoggingService';
 import { useHistory } from 'react-router-dom';
+import { BankList } from './BankList/BankList';
+import { IBank } from '../../../../models/Bank';
+
+type Selection = { [key: string]: boolean };
 
 export function Banks(): ReactElement
 {
     const history = useHistory();
-    const logger = useDependency(LoggingService);
     const repository = useDependency(BankRepositoryService);
-
     const banks = repository.getAll();
-    logger.debug(`Got ${banks.length} banks.`);
 
-    function newBank(): void
+    function add(): void
     {
         history.push(`/admin/banks/new`);
     }
 
-    function editBank(id: string): void
+    function edit(bank: IBank): void
     {
-        history.push(`/admin/banks/${id}`);
+        history.push(`/admin/banks/${bank.id}`);
     }
 
-    function removeBank(id: string): void
+    function remove(ids: string[]): void
     {
-        repository.remove(id);
+        for (const id of ids)
+        {
+            repository.remove(id);
+        }
     }
 
     return (
         <Page>
             <Card>
                 <h1>Banks</h1>
-                <button onClick={newBank}>Add New</button>
-                {(banks && banks.length > 0) ?
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Name</td>
-                                <td>Description</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {banks.map(bank => (
-                                <tr key={bank.id} onClick={() => editBank(bank.id)}>
-                                    <td>{bank.name}</td>
-                                    <td>{bank.description}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    : <span>There's not banks yet. Try to <button onClick={newBank}>add a new one.</button></span>}
+                <BankList banks={banks} onAdd={add} onEdit={edit} onRemove={remove} />
             </Card>
         </Page>
     );

@@ -1,0 +1,7 @@
+@import "../../../../stylesheets/colors";
+
+.actionable-link {
+    color: $primary-color;
+    text-decoration: underline;
+    cursor: pointer;
+}

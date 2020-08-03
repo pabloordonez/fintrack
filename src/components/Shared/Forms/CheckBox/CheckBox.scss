@@ -1,0 +1,50 @@
+@import "../../../../stylesheets/colors";
+
+.custom-checkbox {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+
+    .ms-Icon {
+        transition: color ease 200ms, outline ease 200ms;
+    }
+
+    &:hover {
+        .ms-Icon {
+            color: white;
+        }
+    }
+
+    .ms-Icon {
+        color: #919191;
+        position: relative;
+        font-size: 1.3em;
+
+        &:before {
+            content: "";
+        }
+    }
+
+    input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+
+        &:focus {
+            + .ms-Icon {
+                border-color: $primary-color;
+            }
+        }
+
+        &:checked {
+            + .ms-Icon {
+                color: $primary-color;
+
+                &:before {
+                    content: "";
+                }
+            }
+        }
+    }
+}

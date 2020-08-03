@@ -14,6 +14,7 @@ table {
         tr {
             td {
                 font-weight: 600;
+                color: black;
             }
         }
     }
@@ -22,6 +23,17 @@ table {
         tr {
             transition: .25s;
             cursor: pointer;
+
+            td {
+                border-bottom: 1px solid #eee;
+
+            }
+
+            &:last-child {
+                td {
+                    border-bottom: none;
+                }
+            }
 
             &:hover {
                 background: rgba($primary-color, .2);
