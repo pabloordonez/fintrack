@@ -2,7 +2,7 @@ import React, { ReactElement, useState, useEffect, ComponentType, PropsWithChild
 
 export type ShowModalFunction = () => void;
 export type ModalResultFunction<TResult> = (result: TResult) => void;
-export type ModalContentProps<TProps, TResult> =  TProps & { onClose: ModalResultFunction<TResult> } & PropsWithChildren<{}>;
+export type ModalContentProps<TProps, TResult> = TProps & { onClose: ModalResultFunction<TResult> } & PropsWithChildren<{}>;
 
 class ModalInstance
 {
@@ -92,8 +92,8 @@ export function useModal<TParameter, TResult>(
 
         if (callback)
             callback(result);
-
-        setModalResult(result);
+        else
+            setModalResult(result);
     }
 
     function onShow(): void
@@ -101,7 +101,7 @@ export function useModal<TParameter, TResult>(
         ModalManager.instance.add(modalInstance);
     }
 
-    const modalInstance = new ModalInstance(<Component onClose={onClose} { ...props } />);
+    const modalInstance = new ModalInstance(<Component onClose={onClose} {...props} />);
 
     return [onShow, modalResult];
 }
