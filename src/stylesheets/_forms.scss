@@ -2,9 +2,19 @@
 
 $padding: 10px;
 $border-radius: 3px;
+$disabled-color: #aaa;
 $delete-color: #bc2545;
 $accept-color: #3eaa5f;
 $transition: .25s;
+
+@mixin custom_button($color) {
+    background-color: $color;
+    border-color: darken($color, 10);
+
+    &:hover {
+        background-color: lighten($color, 10);
+    }
+}
 
 label {
     display: flex;
@@ -48,22 +58,23 @@ button {
         transform: scale(.95);
     }
 
-    &.delete {
-        background-color: $delete-color;
-        border-color: darken($delete-color, 10);
+    &:disabled {
+        background-color: $disabled-color !important;
+        border-color: darken($disabled-color, 10) !important;
+        color: darken($disabled-color, 20) !important;
+        cursor: default !important;
 
         &:hover {
-            background-color: lighten($delete-color, 10);
+            background: $disabled-color !important;
         }
     }
 
-    &.accept {
-        background-color: $accept-color;
-        border-color: darken($accept-color, 10);
+    &.delete {
+        @include custom_button($delete_color);
+    }
 
-        &:hover {
-            background-color: lighten($accept-color, 10);
-        }
+    &.accept {
+        @include custom_button($accept_color);
     }
 
     &.transparent {

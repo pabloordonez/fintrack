@@ -3,6 +3,7 @@ import React, { ReactElement, PropsWithChildren } from 'react';
 
 interface ListActionBarProps
 {
+    disabled?: boolean;
     onNew: () => void;
 }
 
@@ -14,7 +15,7 @@ export function ListActionBar(props: PropsWithChildren<ListActionBarProps>): Rea
 
     return (
         <div className='list-action-bar'>
-            <button onClick={newItem}><i className='ms-Icon ms-Icon--AddNew'/> Add New</button>
+            <button onClick={newItem} disabled={props.disabled}><i className='ms-Icon ms-Icon--AddNew'/> Add New</button>
             {props.children}
         </div>
     );

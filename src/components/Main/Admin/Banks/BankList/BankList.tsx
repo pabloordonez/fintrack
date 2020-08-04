@@ -1,5 +1,5 @@
 import './BankList.scss';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { ActionableLink } from '../../../../Shared/Forms/ActionableLink/ActionableLink';
 import { CheckBox } from '../../../../Shared/Forms/CheckBox/CheckBox';
 import { IBank } from '../../../../../models/Bank';
@@ -9,22 +9,41 @@ import { AsyncContentProps } from '../../../../../hooks/UseAsyncCall';
 
 interface BankListProps
 {
-    onEdit: (bank: IBank) => void;
-    onAdd: () => void;
-    onRemove: (ids: string[]) => void;
+    onEdit: (bank: IBank) => Promise<void>;
+    onAdd: () => Promise<void>;
+    onRemove: (ids: string[]) => Promise<void>;
 }
 
 export function BankList(props: AsyncContentProps<BankListProps, IBank[]>): ReactElement
 {
     const [selectedIds, select] = useListSelection();
+    const [disabled, setDisabled] = useState(false);
     const selected = selectedIds.length > 0;
+
+    async function add(): Promise<void>
+    {
+        setDisabled(true);
+        await props.onAdd().finally(() => setDisabled(false));
+    }
+
+    async function edit(bank: IBank): Promise<void>
+    {
+        setDisabled(true);
+        await props.onEdit(bank).finally(() => setDisabled(false));
+    }
+
+    async function remove(): Promise<void>
+    {
+        setDisabled(true);
+        await props.onRemove(selectedIds).finally(() => setDisabled(false));
+    }
 
     return (
         <>
-            <ListActionBar onNew={props.onAdd}>
+            <ListActionBar onNew={add} disabled={disabled}>
                 {
                     selected &&
-                    <button onClick={() => props.onRemove(selectedIds)} className='delete'>
+                    <button onClick={remove} className='delete' disabled={disabled}>
                         <i className='ms-Icon ms-Icon--Delete' /> Delete
                     </button>
                 }
@@ -41,7 +60,7 @@ export function BankList(props: AsyncContentProps<BankListProps, IBank[]>): Reac
                     </thead>
                     <tbody>
                         {props.content.map(bank => (
-                            <tr key={bank.id} onClick={() => props.onEdit(bank)}>
+                            <tr key={bank.id} onClick={() => edit(bank)}>
                                 <td onClick={e => e.stopPropagation()}><CheckBox name='Selected' onChange={x => select(bank, x)} /></td>
                                 <td>{bank.name}</td>
                                 <td>{bank.description}</td>
@@ -49,6 +68,6 @@ export function BankList(props: AsyncContentProps<BankListProps, IBank[]>): Reac
                         ))}
                     </tbody>
                 </table>
-                : <span>There are no banks yet. Try to <ActionableLink onClick={props.onAdd}>add a new one</ActionableLink>.</span>}
+                : <span>There are no banks yet. Try to <ActionableLink onClick={add}>add a new one</ActionableLink>.</span>}
         </>);
 }

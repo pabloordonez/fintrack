@@ -73,13 +73,13 @@ export abstract class RepositoryBase<TModel extends { id: string; }> implements 
 
     protected async openTable(): Promise<Table<TModel>>
     {
-        await this.delay(100);
+        await this.delay(1000);
         return this.localStorage.getJson(this.tableName);
     }
 
     protected async saveTable(table: Table<TModel>): Promise<void>
     {
-        await this.delay(100);
+        await this.delay(1000);
         return this.localStorage.setJson(this.tableName, table);
     }
 

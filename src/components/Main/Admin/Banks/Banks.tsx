@@ -1,5 +1,5 @@
 import './Banks.scss';
-import React, { ReactElement, PropsWithChildren } from 'react';
+import React, { ReactElement, PropsWithChildren, useState } from 'react';
 import { Page } from '../../../Shared/Page/Page';
 import { Card } from '../../../Shared/Card/Card';
 import { useDependency } from '../../../../contexts/DependencyContext';
@@ -10,6 +10,7 @@ import { IBank } from '../../../../models/Bank';
 import { withAsyncContent } from '../../../../hooks/UseAsyncCall';
 import { ConfirmModal } from '../../../Shared/Modals/ConfirmModal/ConfirmModal';
 import { showModal } from '../../../../hooks/UseModal';
+import { Guid } from '../../../../types/Guid';
 
 type Selection = { [key: string]: boolean };
 
@@ -17,14 +18,20 @@ export function Banks(props: PropsWithChildren<{ banks: IBank[] }>): ReactElemen
 {
     const history = useHistory();
     const repository = useDependency(BankRepositoryService);
-    const AsyncBankList = withAsyncContent(BankList, { onAdd: add, onEdit: edit, onRemove: remove }, () => repository.getAll());
+    const AsyncBankList = withAsyncContent(BankList, { onAdd: add, onEdit: edit, onRemove: remove }, load);
+    const [, setRefresh] = useState('');
 
-    function add(): void
+    async function load(): Promise<IBank[]>
+    {
+        return await repository.getAll();
+    }
+
+    async function add(): Promise<void>
     {
         history.push(`/admin/banks/new`);
     }
 
-    function edit(bank: IBank): void
+    async function edit(bank: IBank): Promise<void>
     {
         history.push(`/admin/banks/${bank.id}`);
     }
@@ -40,6 +47,8 @@ export function Banks(props: PropsWithChildren<{ banks: IBank[] }>): ReactElemen
                 await repository.remove(id);
             }
         }
+
+        setRefresh(Guid.new().value);
     }
 
     return (
