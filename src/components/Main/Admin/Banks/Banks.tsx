@@ -1,5 +1,5 @@
 import './Banks.scss';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { Page } from '../../../Shared/Page/Page';
 import { Card } from '../../../Shared/Card/Card';
 import { useDependency } from '../../../../contexts/DependencyContext';
@@ -14,7 +14,9 @@ export function Banks(): ReactElement
 {
     const history = useHistory();
     const repository = useDependency(BankRepositoryService);
-    const banks = repository.getAll();
+    const [banks, setBanks] = useState([] as IBank[]);
+
+    useEffect(() => { setTimeout(() => setBanks(repository.getAll())); }, [repository]);
 
     function add(): void
     {
@@ -32,6 +34,8 @@ export function Banks(): ReactElement
         {
             repository.remove(id);
         }
+
+        setBanks([]);
     }
 
     return (

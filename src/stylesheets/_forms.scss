@@ -3,6 +3,7 @@
 $padding: 10px;
 $border-radius: 3px;
 $delete-color: #bc2545;
+$accept-color: #3eaa5f;
 $transition: .25s;
 
 label {
@@ -36,6 +37,7 @@ button {
     border: 1px solid $primary-background-light;
     border-radius: $border-radius;
     transition: $transition;
+    cursor: pointer;
     min-width: 100px;
 
     &:hover {
@@ -52,6 +54,15 @@ button {
 
         &:hover {
             background-color: lighten($delete-color, 10);
+        }
+    }
+
+    &.accept {
+        background-color: $accept-color;
+        border-color: darken($accept-color, 10);
+
+        &:hover {
+            background-color: lighten($accept-color, 10);
         }
     }
 

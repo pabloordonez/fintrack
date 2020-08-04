@@ -1,15 +1,14 @@
-import React, { ReactNode, ReactElement, useContext } from 'react';
+import React, { ReactElement, useContext, createContext, PropsWithChildren } from 'react';
 import { DependencyCollection, DependencyContainer, ObjectType } from '@miracledevs/paradigm-web-di';
 
 /**
  * The type of the context value.
  */
-type DependencyContextValueType = { collection: DependencyCollection, container?: DependencyContainer };
-
-/**
- * The type of the provider properties.
- */
-type DependencyProviderProps = { children: ReactNode };
+interface DependencyContextValueType
+{
+    collection: DependencyCollection;
+    container?: DependencyContainer;
+}
 
 /**
  * The context dependency collection.
@@ -26,13 +25,13 @@ const ContextValue: DependencyContextValueType = { collection: ContextCollection
 /**
  * Dependency injection react context.
  */
-export const DependencyContext = React.createContext<DependencyContextValueType>(ContextValue);
+const DependencyContext = createContext<DependencyContextValueType>(ContextValue);
 
 /**
  * Gets the dependency provider component.
  * @param props The component properties.
  */
-export function DependencyProvider(props: DependencyProviderProps): ReactElement
+export function DependencyProvider(props: PropsWithChildren<{}>): ReactElement
 {
     const { children } = props;
     return (

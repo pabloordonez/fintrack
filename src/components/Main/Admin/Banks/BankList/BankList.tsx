@@ -22,14 +22,19 @@ export function BankList(props: PropsWithChildren<BankListProps>): ReactElement
     return (
         <>
             <ListActionBar onNew={props.onAdd}>
-                {selected && <button onClick={() => props.onRemove(selectedIds)} className='delete'><i className='ms-Icon ms-Icon--Delete' /> Delete</button>}
+                {
+                    selected &&
+                    <button onClick={() => props.onRemove(selectedIds)} className='delete'>
+                        <i className='ms-Icon ms-Icon--Delete' /> Delete
+                    </button>
+                }
             </ListActionBar>
 
             {(props.banks && props.banks.length > 0)
                 ? <table>
                     <thead>
                         <tr>
-                            <td style={{ width: '20px'}}></td>
+                            <td style={{ width: '20px' }}></td>
                             <td>Name</td>
                             <td>Description</td>
                         </tr>
@@ -44,6 +49,6 @@ export function BankList(props: PropsWithChildren<BankListProps>): ReactElement
                         ))}
                     </tbody>
                 </table>
-                : <span>There's not banks yet. Try to <ActionableLink onClick={props.onAdd}>add a new one</ActionableLink>.</span>}
+                : <span>There are no banks yet. Try to <ActionableLink onClick={props.onAdd}>add a new one</ActionableLink>.</span>}
         </>);
 }

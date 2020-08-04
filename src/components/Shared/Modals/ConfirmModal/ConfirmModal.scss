@@ -1,0 +1,15 @@
+.modal-content {
+    display: grid;
+    gap: 20px;
+    grid-auto-rows: 3;
+
+    h1 {
+        font-weight: 600;
+    }
+
+    .modal-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+}

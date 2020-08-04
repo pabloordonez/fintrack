@@ -6,6 +6,7 @@ import { Header } from './Header/Header';
 import { SideNav } from './SideNav/SideNav';
 import { Main } from './Main/Main';
 import { Footer } from './Footer/Footer';
+import { ModalContainer } from '../hooks/UseModal';
 
 function App()
 {
@@ -18,6 +19,7 @@ function App()
                     <Main />
                     <Footer />
                 </Router>
+                <ModalContainer></ModalContainer>
             </div>
         </DependencyProvider>
     );
