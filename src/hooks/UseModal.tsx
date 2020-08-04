@@ -59,7 +59,6 @@ class ModalManager
     }
 }
 
-
 export function ModalContainer(): ReactElement
 {
     const [modals, setModals] = useState([] as ModalInstance[]);
@@ -75,7 +74,7 @@ export function ModalContainer(): ReactElement
         return () => { ModalManager.instance.onUpdated = null; };
     });
 
-    return (<>{modals && modals.length > 0 && modals.map((x, i) => (<div key={i}>{x.element}</div>))}</>);
+    return (<>{modals && modals.length > 0 && modals.map((x, i) => (<div key={i} style={{ position: 'fixed' }}>{x.element}</div>))}</>);
 }
 
 export function useModal<TParameter, TResult>(
@@ -105,3 +104,24 @@ export function useModal<TParameter, TResult>(
 
     return [onShow, modalResult];
 }
+
+
+export function showModal<TParameter, TResult>(
+    Component: ComponentType<ModalContentProps<TParameter, TResult>>,
+    props: TParameter
+): Promise<TResult>
+{
+    return new Promise(resolve =>
+    {
+        function onClose(result: TResult): void
+        {
+            ModalManager.instance.remove(modalInstance);
+            resolve(result);
+        }
+
+        const modalInstance = new ModalInstance(<Component onClose={onClose} {...props} />);
+        ModalManager.instance.add(modalInstance);
+    });
+}
+
+

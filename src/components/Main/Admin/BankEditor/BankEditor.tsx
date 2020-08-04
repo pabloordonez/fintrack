@@ -4,11 +4,12 @@ import { Page } from '../../../Shared/Page/Page';
 import { Card } from '../../../Shared/Card/Card';
 import { useDependency } from '../../../../contexts/DependencyContext';
 import { BankRepositoryService } from '../../../../services/repositories/BankRepositoryService';
-import { LoggingService } from '../../../../services/logging/LoggingService';
-import { RouteComponentProps } from 'react-router-dom';
-import { Bank } from '../../../../models/Bank';
-import { TextField } from '../../../Shared/Forms/TextField/TextField';
-import { EditionActionBar } from '../../../Shared/Forms/EditionActionBar/EditionActionBar';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { Bank, IBank } from '../../../../models/Bank';
+import { withAsyncContent } from '../../../../hooks/UseAsyncCall';
+import { BankForm } from './BankForm/BankForm';
+import { showModal } from '../../../../hooks/UseModal';
+import { ConfirmModal } from '../../../Shared/Modals/ConfirmModal/ConfirmModal';
 
 interface BankEditorParameters
 {
@@ -17,34 +18,38 @@ interface BankEditorParameters
 
 export function BankEditor(props: RouteComponentProps<BankEditorParameters>): ReactElement
 {
-    const logger = useDependency(LoggingService);
+    const history = useHistory();
     const repository = useDependency(BankRepositoryService);
     const isNew = props.match.params.id === 'new';
-    const bank = isNew
-        ? new Bank()
-        : Bank.fromInterface(repository.get(props.match.params.id));
+    const AsyncBankForm = withAsyncContent(BankForm, { onSave: save, onRemove: remove }, load);
 
-    logger.debug(`Got bank '${bank.name}'.`);
-
-    function save(): void
+    async function load(): Promise<IBank>
     {
-        repository.save(bank);
-        logger.debug(`Bank '${bank.name}' saved.`);
+        return isNew ? new Bank() : Bank.fromInterface(await repository.get(props.match.params.id));
     }
 
-    function remove(): void
+    async function save(bank: IBank): Promise<void>
     {
-        repository.remove(bank.id);
-        logger.debug(`Bank '${bank.name}' removed.`);
+        await repository.save(bank);
+        history.goBack();
+    }
+
+    async function remove(bank: IBank): Promise<void>
+    {
+        const result = await showModal(ConfirmModal, { title: 'Remove Bank', content: 'Are you sure you want to remove the bank?' });
+
+        if (result)
+        {
+            await repository.remove(bank.id);
+            history.goBack();
+        }
     }
 
     return (
         <Page>
             <Card>
-                <h1>{bank.name}</h1>
-                <EditionActionBar onSave={save} onRemove={remove} />
-                <TextField name='Name' object={bank} field='name' />
-                <TextField name='Description' object={bank} field='description' />
+                <h1>{isNew ? 'New Bank' : 'Edit Bank'}</h1>
+                <AsyncBankForm />
             </Card>
         </Page>
     );

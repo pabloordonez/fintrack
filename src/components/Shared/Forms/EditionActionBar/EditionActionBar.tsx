@@ -4,25 +4,23 @@ import { useHistory } from 'react-router-dom';
 
 interface EditionActionBarProps
 {
-    onSave: () => void;
-    onRemove: () => void;
+    onSave: () => Promise<void> | void;
+    onRemove: () => Promise<void> | void;
 }
 
 export function EditionActionBar(props: PropsWithChildren<EditionActionBarProps>): ReactElement
 {
     const history = useHistory();
 
-    function save() {
-        props.onSave();
-        history.goBack();
+    async function save(): Promise<void> {
+        await props.onSave();
     }
 
-    function remove() {
-        props.onRemove();
-        history.goBack();
+    async function remove(): Promise<void> {
+        await props.onRemove();
     }
 
-    function goBack() {
+    function goBack(): void {
         history.goBack();
     }
 

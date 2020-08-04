@@ -1,5 +1,5 @@
 import './Banks.scss';
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, PropsWithChildren } from 'react';
 import { Page } from '../../../Shared/Page/Page';
 import { Card } from '../../../Shared/Card/Card';
 import { useDependency } from '../../../../contexts/DependencyContext';
@@ -7,16 +7,17 @@ import { BankRepositoryService } from '../../../../services/repositories/BankRep
 import { useHistory } from 'react-router-dom';
 import { BankList } from './BankList/BankList';
 import { IBank } from '../../../../models/Bank';
+import { withAsyncContent } from '../../../../hooks/UseAsyncCall';
+import { ConfirmModal } from '../../../Shared/Modals/ConfirmModal/ConfirmModal';
+import { showModal } from '../../../../hooks/UseModal';
 
 type Selection = { [key: string]: boolean };
 
-export function Banks(): ReactElement
+export function Banks(props: PropsWithChildren<{ banks: IBank[] }>): ReactElement
 {
     const history = useHistory();
     const repository = useDependency(BankRepositoryService);
-    const [banks, setBanks] = useState([] as IBank[]);
-
-    useEffect(() => { setTimeout(() => setBanks(repository.getAll())); }, [repository]);
+    const AsyncBankList = withAsyncContent(BankList, { onAdd: add, onEdit: edit, onRemove: remove }, () => repository.getAll());
 
     function add(): void
     {
@@ -28,21 +29,24 @@ export function Banks(): ReactElement
         history.push(`/admin/banks/${bank.id}`);
     }
 
-    function remove(ids: string[]): void
+    async function remove(ids: string[]): Promise<void>
     {
-        for (const id of ids)
-        {
-            repository.remove(id);
-        }
+        const result = await showModal(ConfirmModal, { title: 'Remove Banks', content: 'Are you sure you want to remove the banks?' });
 
-        setBanks([]);
+        if (result)
+        {
+            for (const id of ids)
+            {
+                await repository.remove(id);
+            }
+        }
     }
 
     return (
         <Page>
             <Card>
                 <h1>Banks</h1>
-                <BankList banks={banks} onAdd={add} onEdit={edit} onRemove={remove} />
+                <AsyncBankList />
             </Card>
         </Page>
     );

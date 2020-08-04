@@ -1,4 +1,4 @@
-import React, { ReactElement, PropsWithChildren } from 'react';
+import React, { ReactElement } from 'react';
 import { ModalFrame } from '../ModalFrame/ModalFrame';
 import { ModalContentProps } from '../../../../hooks/UseModal';
 import './ConfirmModal.scss';
