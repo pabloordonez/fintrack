@@ -46,9 +46,9 @@ export function Banks(props: PropsWithChildren<{ banks: IBank[] }>): ReactElemen
             {
                 await repository.remove(id);
             }
-        }
 
-        setRefresh(Guid.new().value);
+            setRefresh(Guid.new().value);
+        }
     }
 
     return (

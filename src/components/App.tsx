@@ -7,6 +7,7 @@ import { SideNav } from './SideNav/SideNav';
 import { Main } from './Main/Main';
 import { Footer } from './Footer/Footer';
 import { ModalContainer } from '../hooks/UseModal';
+import { LoadingSplash } from './Shared/Loading/LoadingSplash/LoadingSplash';
 
 function App()
 {
@@ -19,7 +20,8 @@ function App()
                     <Main />
                     <Footer />
                 </Router>
-                <ModalContainer></ModalContainer>
+                <ModalContainer />
+                <LoadingSplash />
             </div>
         </DependencyProvider>
     );

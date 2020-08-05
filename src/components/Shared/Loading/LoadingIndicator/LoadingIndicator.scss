@@ -1,0 +1,10 @@
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    span {
+        margin-top: 20px;
+        color: white;
+    }
+}

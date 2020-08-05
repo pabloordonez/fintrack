@@ -1,4 +1,4 @@
-.modal-overlay {
+.loading-splash {
     position: fixed;
     z-index: 10000;
     display: block;
@@ -9,7 +9,7 @@
     background: rgba(#000, .5);
     backdrop-filter: blur(5px);
 
-    .modal-frame {
+    .loading-indicator {
         position: absolute;
         top: 50%;
         left: 50%;
